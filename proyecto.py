@@ -6,19 +6,27 @@ import matplotlib.pyplot as plt
 print('\033[31mPractica 4: Gradiente de presión\033[0m')
 print('Bienvenido a este programa, aquí podrás realizar todos los calculos de la práctica 4')
 print('Solo con ingresar los datos experimentales obtenidos al realizar la practica')
-nombre = input("\n¿Cuál es tu nombre? ")
-print(f"Hola, {nombre}!")
-print('\nIngresa tus datos obtenidos en el laboratorio:')
 
-valx = input('Ingresa los datos de la variable independiente "x" (la Altura en metros). Escribe los valores con un espacio entre cada uno\n')
+n = int(input("¿De cuántas personas es tu brigada? (elige entre 4 y 6): "))
+while n < 4 or n > 6:
+    print("El numero debe estar entre 4 y 6.")
+    n = int(input("¿De cuántas personas es tu brigada? (elige entre 4 y 6): "))
 
+valx = input('Ingresa los datos de la variable independiente "x" (la Altura en metros). Escribe los valores con un espacio entre cada uno. Estas alturas seran iguales para cada persona que realice el experimento\n')
 x = np.array([float(valor) for valor in valx.split()]).reshape(-1, 1)
 
-print('Ingresa los valores la variable dependiente "y", la Presión Manométrica en pascales')
- 
-valy = input ('Ingresa los valores la variable dependiente "y"(la Presión Manométrica en pascales). Escribe los con un espacio entre cada uno\n')
- 
-y = np.array([float(valor) for valor in valy.split()]) 
+for i in range (n):
+
+            nombre = input("\n¿Cuál es tu nombre? ")
+            print(f"Hola, {nombre}!")
+            print('\nIngresa tus datos obtenidos en el laboratorio:')
+
+
+            print('Ingresa los valores la variable dependiente "y", la Presión Manométrica en pascales')
+            
+            valy = input ('Ingresa los valores la variable dependiente "y"(la Presión Manométrica en pascales). Escribe los con un espacio entre cada uno\n')
+            
+            y = np.array([float(valor) for valor in valy.split()]) 
 
 modelo=LinearRegression()
 modelo.fit(x,y)
@@ -26,7 +34,7 @@ modelo.fit(x,y)
 m=modelo.coef_[0]
 b=modelo.intercept_
 
-print('El modelo matemático lineal de tus datos experimentales es:')
+print('\nEl modelo matemático lineal de tus datos experimentales es:')
 
 if b>0:
     print("Pman[Pa] = %.6f[Pa/m]*h[m] + %.6f[Pa]"%(m,b))
