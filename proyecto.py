@@ -1,7 +1,7 @@
 from sklearn.linear_model import LinearRegression
 import numpy as np
 import matplotlib.pyplot as plt
-
+from tabulate import tabulate
 
 print('\033[31mPractica 4: Gradiente de presión\033[0m')
 print('Bienvenido a este programa, aquí podrás realizar todos los calculos de la práctica 4')
@@ -12,21 +12,27 @@ while n < 4 or n > 6:
     print("El numero debe estar entre 4 y 6.")
     n = int(input("¿De cuántas personas es tu brigada? (elige entre 4 y 6): "))
 
-valx = input('Ingresa los datos de la variable independiente "x" (la Altura en metros). Escribe los valores con un espacio entre cada uno. Estas alturas seran iguales para cada persona que realice el experimento\n')
-x = np.array([float(valor) for valor in valx.split()]).reshape(-1, 1)
+print("\nIngresa las alturas utilizadas en el experimento (en metros).")
+print("Escribe todas las alturas separadas por un espacio:")
+valx = list(map(float, input("Alturas: ").split()))
+x = np.array(valx).reshape(-1, 1)
 
-for i in range (n):
+datos_presiones = []
+for persona in range(1, n + 1):
+    print(f"\n--- Datos para la Persona {persona} ---")
+    presiones = []
+    for i in range(len(valx)):
+        presion = float(input(f"Ingresa la presión correspondiente a la altura {valx[i]} m (en Pa): "))
+        presiones.append(presion)
+    datos_presiones.append(presiones)
 
-            nombre = input("\n¿Cuál es tu nombre? ")
-            print(f"Hola, {nombre}!")
-            print('\nIngresa tus datos obtenidos en el laboratorio:')
+headers = ["Altura [m]"] + [f"Persona {i+1}" for i in range(n)]
+tabla = [[valx[i]] + [datos_presiones[j][i] for j in range(n)] for i in range(len(valx))]
 
+print("\n\033[34mTabla de datos experimentales:\033[0m")
+print(tabulate(tabla, headers=headers, floatfmt=".2f", tablefmt="grid"))
 
-            print('Ingresa los valores la variable dependiente "y", la Presión Manométrica en pascales')
-            
-            valy = input ('Ingresa los valores la variable dependiente "y"(la Presión Manométrica en pascales). Escribe los con un espacio entre cada uno\n')
-            
-            y = np.array([float(valor) for valor in valy.split()]) 
+y = np.mean(datos_presiones, axis=0)
 
 modelo=LinearRegression()
 modelo.fit(x,y)
@@ -60,6 +66,7 @@ d=[b, py]
 
 print("El significado del modelo matematico es el siguiente:")
 print(f"El peso especifico es la pendiente: {m:.6f} en [Pa/m] ó [N/m^3]")
+print('La ordenada al origen del modelo significa el error experimental')
 
 gravedad = float ( input ("Ingresa el valor de la gravedad con la que deseas realizar los calculos (en m/s^2): ") )
 densidad = m / gravedad
@@ -83,7 +90,6 @@ densidadteorica = float ( input ("Ingresa el valor de la densidad teorica de tu 
 error_exactitud1 = abs(((densidad-densidadteorica)/densidadteorica) * 100)
 
 print(f"El error de exactitud de la densidad de tu experimento es {error_exactitud1:.6f} %")
-
 
 plt.figure(1)
 plt.scatter(x,y, color='b', label="Datos experimentales")
