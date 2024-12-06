@@ -43,14 +43,14 @@ b=modelo.intercept_
 print('\nEl modelo matemático lineal de tus datos experimentales es:')
 
 if b>0:
-    print("Pman[Pa] = %.6f[Pa/m]*h[m] + %.6f[Pa]"%(m,b))
+    print("Pman[Pa] = %.6f[Pa/m]*h[m] + %.6f[Pa]\n"%(m,b))
 else:
-    print("Pman[Pa] = %.6f[Pa/m]*h[m] %.6f[Pa]"%(m,b))
+    print("Pman[Pa] = %.6f[Pa/m]*h[m] %.6f[Pa]\n"%(m,b))
 
 px=np.mean(x)
 py=np.mean(y)
 
-print(f"El centroide de tu pendiente es {px, py}")
+print(f"El centroide de tu pendiente es {px, py}\n")
 
 highlight1=[px, 0]
 highlight2=[py, b]
@@ -68,14 +68,14 @@ print("El significado del modelo matematico es el siguiente:")
 print(f"El peso especifico es la pendiente: {m:.6f} en [Pa/m] ó [N/m^3]")
 print('La ordenada al origen del modelo significa el error experimental')
 
-gravedad = float ( input ("Ingresa el valor de la gravedad con la que deseas realizar los calculos (en m/s^2): ") )
+gravedad = float ( input ("\nIngresa el valor de la gravedad con la que deseas realizar los calculos (en m/s^2): ") )
 densidad = m / gravedad
-print(f"La densidad del fluido es {densidad:.6f} [kg/m^3]")
+print(f"\nLa densidad del fluido es {densidad:.6f} [kg/m^3]")
 
 volumen_especifico = 1 / densidad
 print(f"El volumen especifico es {volumen_especifico:.6f} [m^3/kg]")
 
-print('Para obtener el porcentaje de error experimental, aqui estan las densidades de algunas sustancias en [kg/m^3]:')
+print('\nPara obtener el porcentaje de error experimental, aqui estan las densidades de algunas sustancias en [kg/m^3]:')
 print('Gasolina = 740')
 print('Alcohol etilico = 789')
 print('Acetona = 791')
@@ -85,11 +85,11 @@ print('Agua = 1000')
 print('Glicerina = 1260')
 print('Cloro = 1560')
 
-densidadteorica = float ( input ("Ingresa el valor de la densidad teorica de tu fluido en [kg/m^3]: ") )
+densidadteorica = float ( input ("\nIngresa el valor de la densidad teorica de tu fluido en [kg/m^3]: ") )
 
 error_exactitud1 = abs(((densidad-densidadteorica)/densidadteorica) * 100)
 
-print(f"El error de exactitud de la densidad de tu experimento es {error_exactitud1:.6f} %")
+print(f"\nEl error de exactitud de la densidad de tu experimento es {error_exactitud1:.6f} %")
 
 plt.figure(1)
 plt.scatter(x,y, color='b', label="Datos experimentales")
